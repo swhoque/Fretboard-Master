@@ -1,31 +1,36 @@
 {
     "CTk": {
-      "fg_color": ["#B07C4F", "#63462D"]
+      "fg_color": ["#D7C0AE", "#967E76"]
     },
     "CTkToplevel": {
-      "fg_color": ["#B07C4F", "#63462D"]
+      "fg_color": ["#D7C0AE", "#967E76"]
+    },
+    "CTkTabView": {
+      "fg_color": ["#D7C0AE", "#967E76"],
+      "segmented_button_fg_color": ["#B7C4CF", "#EEE3CB"],
+      "segmented_button_selected_color": ["#B7C4CF", "#EEE3CB"]
     },
     "CTkFrame": {
       "corner_radius": 6,
       "border_width": 0,
-      "fg_color": ["#B07C4F", "#63462D"],
-      "top_fg_color": ["#B07C4F", "#63462D"],
-      "border_color": ["#B07C4F", "#63462D"],
-      "bg_color": ["#B07C4F", "#63462D"]
+      "fg_color": ["#D7C0AE", "#967E76"],
+      "top_fg_color": ["#D7C0AE", "#967E76"],
+      "border_color": ["#D7C0AE", "#967E76"],
+      "bg_color": ["#D7C0AE", "#967E76"]
     },
     "CTkButton": {
       "corner_radius": 6,
       "border_width": 0,
-      "fg_color": ["#5482F0", "#2D4A63"],
+      "fg_color": ["#B7C4CF", "#EEE3CB"],
       "hover_color": ["#415EA3", "#3D6486"],
-      "border_color": ["#B07C4F", "#63462D"],
-      "text_color": ["#F0C254", "#F0C254"],
+      "border_color": ["#D7C0AE", "#967E76"],
+      "text_color": ["#FFE6E6FA", "#373737"],
       "text_color_disabled": ["gray74", "gray60"]
     },
     "CTkLabel": {
       "corner_radius": 0,
-      "fg_color": ["#B07C4F", "#63462D"],
-      "text_color": ["#4F83B0", "#F0C254"]
+      "fg_color": ["#D7C0AE", "#967E76"],
+      "text_color": ["#FFE6E6FA", "#373737"]
     },
     "CTkEntry": {
       "corner_radius": 6,
@@ -70,7 +75,7 @@
       "corner_radius": 1000,
       "border_width": 0,
       "fg_color": ["#939BA2", "#4A4D50"],
-      "progress_color": ["#3a7ebf", "#1f538d"],
+      "progress_color": ["#B7C4CF", "#EEE3CB"],
       "border_color": ["gray", "gray"]
     },
     "CTkSlider": {
@@ -85,10 +90,10 @@
     },
     "CTkOptionMenu": {
       "corner_radius": 6,
-      "fg_color": ["#3a7ebf", "#1f538d"],
-      "button_color": ["#325882", "#14375e"],
-      "button_hover_color": ["#234567", "#1e2c40"],
-      "text_color": ["#DCE4EE", "#DCE4EE"],
+      "fg_color": ["#B7C4CF", "#EEE3CB"],
+      "button_color": ["#B7C4CF", "#EEE3CB"],
+      "button_hover_color": ["#415EA3", "#3D6486"],
+      "text_color": ["#FFE6E6FA", "#373737"],
       "text_color_disabled": ["gray74", "gray60"]
     },
     "CTkComboBox": {
