@@ -6,4 +6,6 @@ class FretButton(CTkButton):
                         text=text,
                         command=func
                         )
+        self.row = row
+        self.col = col
         self.grid(row=row, column=col, padx=2, pady=2, sticky="nsew")
