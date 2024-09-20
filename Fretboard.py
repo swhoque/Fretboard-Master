@@ -23,14 +23,15 @@ class Fretboard:
         return self.fretboard
 
     def get_note_at(self, string, fret):
-        if self.fretboard[string][fret][1] == "#":
+        if self.fretboard[string][fret][1] == "#": # If the note is sharp, return the first two characters to prevent errors
             return self.fretboard[string][fret][:2]
         else: return self.fretboard[string][fret][0]
     
+    # Use list comprehension to get the notes of a chord
     def get_chord_at(self, chord):
         keys = list(self.chord_map.keys())
         vals = list(self.chord_map.values())
-        pos = vals.index(chord)
+        pos = vals.index(chord) # Keys have the same index as the values
         return keys[pos]
 
     def get_note_index(self, string, note):
@@ -70,6 +71,7 @@ class Fretboard:
             self.played = True
         else: self.played = False
 
+    # Notes are cast as tuples to match the tuple format of the scales and chords
     def practice_chord(self, targ_chord, notes):
         if targ_chord == tuple(notes):
             self.played = True
