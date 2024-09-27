@@ -3,13 +3,15 @@ from tkinter import messagebox
 from Fretboard import Fretboard
 from Fret_Buttons import FretButton
 from settings import *
+from statsdb_functions import *
+from statsdb_setup import *
 import random
 import re
 
 
 
 ctk.set_default_color_theme("classic_theme.json")
-ctk.set_appearance_mode("light")
+ctk.set_appearance_mode("dark")
 
 class Screen:
     def __init__(self, window):
@@ -93,7 +95,6 @@ class Screen:
         settings_tabs = ctk.CTkTabview(master=self.setting_frame)
         settings_tabs.add("Resolution")
         settings_tabs.add("Theme")
-        settings_tabs.add("Sound")
         settings_tabs.pack()
 
         resolution_label = ctk.CTkLabel(settings_tabs.tab("Resolution"), text="Resolution", font=("Playfair Display", 100))
@@ -107,12 +108,6 @@ class Screen:
 
         theme_dropdown = ctk.CTkOptionMenu(settings_tabs.tab("Theme"), values=["--select a theme--", "dark", "light"], command=lambda selected: ctk.set_appearance_mode(selected))
         theme_dropdown.pack(pady=20)
-
-        sound_label = ctk.CTkLabel(settings_tabs.tab("Sound"), text="Sound", font=("Playfair Display", 100))
-        sound_label.pack(pady=20)
-
-        sound_dropdown = ctk.CTkOptionMenu(settings_tabs.tab("Sound"), values=["--select a sound--", "on", "off"], command=lambda selected: ctk.set_appearance_mode(selected))
-        sound_dropdown.pack(pady=20)
 
         back_button = ctk.CTkButton(self.setting_frame, text="Back", command= lambda:self.main_screen())
         back_button.pack()
