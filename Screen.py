@@ -2,14 +2,16 @@ import customtkinter as ctk
 from tkinter import messagebox
 from Fretboard import Fretboard
 from Fret_Buttons import FretButton
+from platform import platform
 from settings import *
 import random
 import re
 
 
-
-ctk.set_default_color_theme("classic_theme.json")
-ctk.set_appearance_mode("light")
+if "Windows" in platform():
+    ctk.set_default_color_theme("Fretboard-Master\classic_theme.json")
+else:
+    ctk.set_default_color_theme("classic_theme.json")
 
 class Screen:
     def __init__(self, window):
