@@ -17,7 +17,7 @@ def initialize_database(conn):
                             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             session_time INTEGER,
                             total_time INTEGER,
-                            login_date DATE
+                            login_date DATE,
                             streak INTEGER
                         )''')
         conn.execute('''CREATE TABLE IF NOT EXISTS note_stats (

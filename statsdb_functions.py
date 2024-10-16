@@ -19,8 +19,8 @@ def register_user(conn, user_name, password):
             # Hash the password
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             # Insert a new row into the user_logins table
-            conn.execute('''INSERT INTO user_logins (user_name, password, session_time, total_time, login_date)
-                            VALUES (?, ?, 0, 0, ?)''', 
+            conn.execute('''INSERT INTO user_logins (user_name, password, session_time, total_time, login_date, streak)
+                            VALUES (?, ?, 0, 0, ?, 1)''', 
                             (user_name, hashed_password, datetime.now().date()))
             user_id = conn.execute('''SELECT user_id FROM user_logins WHERE user_name = ?''', (user_name,)).fetchone()[0]
             conn.execute('''INSERT INTO note_stats (user_id, notes_mastered, total_notes_hit, total_notes_missed) VALUES (?, 0, 0, 0)''', (user_id,))
@@ -118,9 +118,15 @@ def check_consecutive_logins(conn, user_id):
     # If the number of days is 1, the user logged in consecutively
     if days_difference == 1:
         print("User logged in consecutively!")
+        cur.execute('''UPDATE user_logins SET streak = streak + 1 WHERE user_id = ?''', (user_id,))
+        conn.commit()
         return True
+    elif days_difference == 0:
+        print("User logged in today!")
+        return False
     else:
         print("Not a consecutive login.")
+        cur.execute('''UPDATE user_logins SET streak = 1 WHERE user_id = ?''', (user_id,))
         return False
 
 def get_total_time(conn, user_id):
@@ -155,9 +161,13 @@ def update_total_time(conn, user_id):
     Returns:
         None
     """
-    cur = conn.cursor()
-    cur.execute('''SELECT session_time FROM user_logins WHERE user_id = ?''', (user_id,))
-    session_start_time = cur.fetchone()
+    try:
+        cur = conn.cursor()
+        cur.execute('''SELECT session_time FROM user_logins WHERE user_id = ?''', (user_id,))
+        session_start_time = cur.fetchone()
+    except sqlite3.OperationalError as e:
+        print(f"Error updating total time: {e}")
+        return
     
     # Check if user_id exists in the database
     if session_start_time is None:
@@ -319,7 +329,7 @@ def update_chord_stats(conn, user_id, mastered=0, hit=0, missed=0):
     cur = conn.cursor()
 
     # Execute update statement if there are any updates to make
-    if mastered == 0 or hit == 0 or missed == 0:
+    if mastered == 0 and hit == 0 and missed == 0:
         print("No updates to make.")
     else:
         cur.execute(f'''UPDATE chord_stats 

@@ -1,4 +1,5 @@
 import simpleaudio as sa
+from platform import platform
 from settings import CHORD_MAP
 from settings import SCALES_MAP
 
@@ -59,11 +60,19 @@ class Fretboard:
     #Helpers
     def play_note(self, string, fret):
         note = self.fretboard[string][fret]
-        self.play_obj = self.wav_obj.from_wave_file("Assets/" + note + ".wav").play()
+        os = platform()
+        if "Windows" in os:
+            self.play_obj = self.wav_obj.from_wave_file("Assets\\" + note + ".wav").play()
+        else:
+            self.play_obj = self.wav_obj.from_wave_file("Assets/" + note + ".wav").play()
 
     def play_chord(self, notes):
         chord = self.get_chord_at(notes)
-        self.play_obj = self.wav_obj.from_wave_file("Assets/" + chord + "_chord" + ".wav").play()
+        os = platform()
+        if "Windows" in os:
+            self.play_obj = self.wav_obj.from_wave_file("Assets\\" + chord + ".wav").play()
+        else:
+            self.play_obj = self.wav_obj.from_wave_file("Assets/" + chord + ".wav").play()
     
 
     def practice_note(self, targ_note, note):

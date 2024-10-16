@@ -5,13 +5,12 @@ from Fret_Buttons import FretButton
 from settings import *
 from statsdb_functions import *
 from statsdb_setup import *
+from Stat_Visualization import *
 import random
 import re
 
 
-
 ctk.set_default_color_theme("classic_theme.json")
-ctk.set_appearance_mode("dark")
 
 class Screen:
     def __init__(self, window):
@@ -54,6 +53,7 @@ class Screen:
         self.learn_note_frame = ctk.CTkFrame(self.window)
         self.learn_chord_frame = ctk.CTkFrame(self.window)
         self.learn_scale_frame = ctk.CTkFrame(self.window)
+        self.chart_frame = ctk.CTkFrame(self.practice_frame)
 
         self.conn = create_connection("USER_STATS.db")
         
@@ -466,6 +466,7 @@ class Screen:
         self.login_frame.place(relwidth=1, relheight=1)
 
     def main_screen(self):
+        self.chart_frame.place_forget()
         self.setting_frame.place_forget()
         self.login_frame.place_forget()
         self.jam_frame.place_forget()
@@ -491,6 +492,23 @@ class Screen:
         self.prac_chord_frame.place_forget()
         self.prac_scale_frame.place_forget()
 
+        stat_tabs = ctk.CTkTabview(self.practice_frame, width=500, height=300)
+        stat_tabs.add("Notes")
+        stat_tabs.add("Chords")
+        stat_tabs.add("Scales")
+        stat_tabs.place(x=self.window.winfo_screenwidth()/4, y=self.window.winfo_screenheight()/2 - 150, anchor='center')
+
+        note_frame = ctk.CTkFrame(stat_tabs.tab("Notes"))
+        note_frame.pack()
+        show_note_stats(note_frame, self.conn, self.user[2])
+
+        chord_frame = ctk.CTkFrame(stat_tabs.tab("Chords"))
+        chord_frame.pack()
+        show_chord_stats(chord_frame, self.conn, self.user[2])
+
+        scale_frame = ctk.CTkFrame(stat_tabs.tab("Scales"))
+        scale_frame.pack()
+        show_scale_stats(scale_frame, self.conn, self.user[2])
         self.practice_frame.place(relwidth=1, relheight=1)
     
     def learn_screen(self):
@@ -611,10 +629,12 @@ class Screen:
     def prac_note_button_pressed(self, button, note, string, fret):
         self.fretboard.play_note(string, fret)
         self.fretboard.practice_note(note, self.fretboard.get_note_at(string, fret))
+        update_note_stats(self.conn, self.user[2], 0, 1, 0)
         if self.fretboard.played:
             button.configure(fg_color="green", text_color="#E6E6FA")
             self.prac_note_label.configure(text=f"{random.choice(FEEDBACK_MSG_POSITIVE)}")
         else:
+            update_note_stats(self.conn, self.user[2], 0, 0, 1)
             correct_fret = self.fretboard.get_note_index(string, note)[1]
             self.correct_note(string, correct_fret)
             button.configure(fg_color="red", text_color="#E6E6FA")
@@ -624,12 +644,14 @@ class Screen:
 
     def prac_chord_button_pressed(self, chord_pos):
         self.fretboard.practice_chord(chord_pos, self.fretboard.notes_hit)
+        update_chord_stats(self.conn, self.user[2], 0, 1, 0)
         if self.fretboard.played:
             self.prac_chord_label.configure(text=f'{random.choice(FEEDBACK_MSG_POSITIVE)}')
             self.fretboard.play_chord(chord_pos)
             for button in self.buttons_hit:
                 button.configure(fg_color="green", text_color="#E6E6FA")
         else:
+            update_chord_stats(self.conn, self.user[2], 0, 0, 1)
             self.correct_chord(chord_pos)
             self.prac_chord_label.configure(text=f"{random.choice(FEEDBACK_MSG_NEGATIVE)}\nThe finger placement(s) are at {chord_pos}", font=("Oswald", 50))
             for button in self.buttons_hit:
@@ -640,11 +662,13 @@ class Screen:
 
     def prac_scale_button_pressed(self, scale_pos):
         self.fretboard.practice_scale(scale_pos, self.fretboard.notes_hit)
+        update_scale_stats(self.conn, self.user[2], 0, 1, 0)
         if self.fretboard.played:
             self.prac_scale_label.configure(text=f'{random.choice(FEEDBACK_MSG_POSITIVE)}')
             for button in self.buttons_hit:
                 button.configure(fg_color="green", text_color="#E6E6FA")
         else:
+            update_scale_stats(self.conn, self.user[2], 0, 0, 1)
             self.correct_scale(scale_pos)
             self.prac_scale_label.configure(text=f"{random.choice(FEEDBACK_MSG_NEGATIVE)}\nThe finger placement(s) are at {scale_pos}", font=("Oswald", 30))
             for button in self.buttons_hit:
