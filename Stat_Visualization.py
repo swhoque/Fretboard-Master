@@ -13,12 +13,11 @@ def show_note_stats(master, conn, user_id):
         fig = Figure(figsize=(5, 4), dpi=100, facecolor='xkcd:brown', edgecolor='white')
         ax = fig.add_subplot(111)
         
-        # Sample data for the bar chart
         categories = ["Notes Mastered", "Total Notes Hit", "Total Notes Missed"]
         values = [stat for stat in stats][1:]
         
         # Create the bar chart
-        ax.bar(categories, values)
+        ax.bar(categories, values, color='green', edgecolor='white')
         
         # Embed the matplotlib figure into CustomTkinter using FigureCanvasTkAgg
         canvas = FigureCanvasTkAgg(fig, master=master)
@@ -34,7 +33,6 @@ def show_chord_stats(master, conn, user_id):
         # Get stats using get_chord_stats
         stats = get_chord_stats(conn, user_id)
         
-        # Create a figure and axes
         fig = Figure(figsize=(5, 4), dpi=100, facecolor='xkcd:brown', edgecolor='white')
         ax = fig.add_subplot(111)
         
@@ -43,7 +41,7 @@ def show_chord_stats(master, conn, user_id):
         values = [stat for stat in stats][1:]
         
         # Create the bar chart
-        ax.bar(categories, values)
+        ax.bar(categories, values, color='green', edgecolor='white')
         
         # Embed the matplotlib figure into CustomTkinter using FigureCanvasTkAgg
         canvas = FigureCanvasTkAgg(fig, master=master)
@@ -64,12 +62,11 @@ def show_scale_stats(master, conn, user_id):
         fig = Figure(figsize=(5, 4), dpi=100, facecolor='xkcd:brown', edgecolor='white')
         ax = fig.add_subplot(111)
         
-        # Sample data for the bar chart
         categories = ["Scales Mastered", "Total Scales Hit", "Total Scales Missed"]
         values = [stat for stat in stats][1:]
         
         # Create the bar chart
-        ax.bar(categories, values)
+        ax.bar(categories, values, color='green', edgecolor='white')
         
         # Embed the matplotlib figure into CustomTkinter using FigureCanvasTkAgg
         canvas = FigureCanvasTkAgg(fig, master=master)
