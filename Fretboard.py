@@ -10,7 +10,7 @@ class Fretboard:
         self.play_obj = sa.PlayObject
         self.played = False
         self.fretboard = ["This is the fretboard"]
-        self.fretboard.append(["e_open", 'F_e', 'F#_e', 'G_e', 'G#_e', 'A_e', 'A#_e', 'B_e', 'C_e', 'C#_e', 'D_e', 'D#_e', 'e_12'])
+        self.fretboard.append(["E_open", 'F_e', 'F#_e', 'G_e', 'G#_e', 'A_e', 'A#_e', 'B_e', 'C_e', 'C#_e', 'D_e', 'D#_e', 'E_12'])
         self.fretboard.append(['B_open', 'C_B', 'C#_B', 'D_B', 'D#_B', 'E_B', 'F_B', 'F#_B', 'G_B', 'G#_B', 'A_B', 'A#_B', 'B_12'])
         self.fretboard.append(['G_open', 'G#_G', 'A_G', 'A#_G', 'B_G', 'C_G', 'C#_G', 'D_G', 'D#_G', 'E_G', 'F_G', 'F#_G', 'G_12'])
         self.fretboard.append(['D_open', 'D#_D', 'E_D', 'F_D', 'F#_D', 'G_D', 'G#_D', 'A_D', 'A#_D', 'B_D', 'C_D', 'C#_D', 'D_12'])
